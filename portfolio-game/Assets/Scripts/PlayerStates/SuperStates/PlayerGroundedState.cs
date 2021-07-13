@@ -14,16 +14,16 @@ public class PlayerGroundedState : PlayerState
 
    }
 
-   public override void DoChecks(){
+    public override void DoChecks(){
        base.DoChecks();
        isGrounded = player.CheckIfGrounded();
        isTouchingWall = player.CheckIfTouchingWall();
-   }
+    }
 
-   public override void Enter(){
+    public override void Enter(){
        base.Enter();
        player.JumpState.ResetAmountOfJumpsLeft();
-   }
+    }
     public override void Exit(){
        base.Exit();
     }
@@ -35,7 +35,6 @@ public class PlayerGroundedState : PlayerState
         grabInput = player.InputHandler.GrabInput;
 
         if (JumpInput && player.JumpState.CanJump()) {
-            player.InputHandler.UseJumpInput();
             stateMachine.ChangeState(player.JumpState);
         } else if (!isGrounded) {
             player.InAirState.StartCoyoteTime();

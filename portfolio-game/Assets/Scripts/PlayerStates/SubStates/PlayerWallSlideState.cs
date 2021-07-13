@@ -11,11 +11,13 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        player.setVelocityY(-playerData.wallSlideVelocity);
+        
+        if (!isExitingState){
+            player.setVelocityY(-playerData.wallSlideVelocity);
 
-        if (grabInput && !isExitingState) {
-            stateMachine.ChangeState(player.WallGrabState);
+            if (grabInput) {
+                stateMachine.ChangeState(player.WallGrabState);
+            }
         }
-
     }
 }

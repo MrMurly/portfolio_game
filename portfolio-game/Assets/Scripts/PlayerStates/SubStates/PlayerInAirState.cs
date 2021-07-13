@@ -53,12 +53,12 @@ public class PlayerInAirState : PlayerState
         if (isGrounded && player.CurrentVelocity.y < 0.01f){
             stateMachine.ChangeState(player.LandState);
         } 
-        else if ((jumpInput && isTouchingWall) || isTouchingWallBack) {
+        else if (jumpInput && (isTouchingWall || isTouchingWallBack)) {
+            isTouchingWall = player.CheckIfTouchingWall();
             player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.WallJumpState);
         }
         else if (jumpInput && player.JumpState.CanJump()){
-            player.InputHandler.UseJumpInput();
             stateMachine.ChangeState(player.JumpState);
         }
         else if (grabInput && isTouchingWall) {
