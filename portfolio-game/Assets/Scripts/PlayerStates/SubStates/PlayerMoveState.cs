@@ -25,7 +25,7 @@ public class PlayerMoveState : PlayerGroundedState
         player.setVelocityX(playerData.movementVelocity * xInput);
 
         if (xInput == 0) {
-            stateMachine.ChangeState(player.idleState);
+            stateMachine.ChangeState(player.IdleState);
         }
     }
     public override void PhysicsUpdate()

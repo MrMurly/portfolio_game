@@ -19,7 +19,7 @@ public class PlayerGroundedState : PlayerState
 
    public override void Enter(){
        base.Enter();
-       player.jumpState.ResetAmountOfJumpsLeft();
+       player.JumpState.ResetAmountOfJumpsLeft();
    }
     public override void Exit(){
        base.Exit();
@@ -29,12 +29,12 @@ public class PlayerGroundedState : PlayerState
 
         xInput = player.InputHandler.NormaInputX;
         JumpInput = player.InputHandler.JumpInput;
-        if (JumpInput && player.jumpState.CanJump()) {
+        if (JumpInput && player.JumpState.CanJump()) {
             player.InputHandler.UseJumpInput();
-            stateMachine.ChangeState(player.jumpState);
+            stateMachine.ChangeState(player.JumpState);
         } else if (!isGrounded) {
-            player.inAirState.StartCoyoteTime();
-            stateMachine.ChangeState(player.inAirState);
+            player.InAirState.StartCoyoteTime();
+            stateMachine.ChangeState(player.InAirState);
         }
     }
     public override void PhysicsUpdate()

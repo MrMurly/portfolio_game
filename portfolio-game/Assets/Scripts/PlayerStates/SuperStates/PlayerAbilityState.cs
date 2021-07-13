@@ -36,10 +36,10 @@ public class PlayerAbilityState : PlayerState
         if (isAbilityDone)
         {
             if (isGrounded && player.CurrentVelocity.y < 0.01f) {
-                stateMachine.ChangeState(player.idleState);
+                stateMachine.ChangeState(player.IdleState);
             }
             else{
-                stateMachine.ChangeState(player.inAirState);
+                stateMachine.ChangeState(player.InAirState);
             }
         }
     }

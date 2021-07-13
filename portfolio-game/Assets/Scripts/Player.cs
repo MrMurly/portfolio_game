@@ -8,11 +8,14 @@ public class Player : MonoBehaviour
     // https://www.youtube.com/playlist?list=PLy78FINcVmjA0zDBhLuLNL1Jo6xNMMq-W
     #region StateVariables
     public PlayerStateMachine StateMachine { get; private set; }
-    public PlayerIdleState idleState {get; private set;}
-    public PlayerMoveState moveState {get; private set;}
-    public PlayerJumpState jumpState {get; private set;}
-    public PlayerInAirState inAirState {get; private set;}
-    public PlayerLandState landState {get; private set;}
+    public PlayerIdleState IdleState {get; private set;}
+    public PlayerMoveState MoveState {get; private set;}
+    public PlayerJumpState JumpState {get; private set;}
+    public PlayerInAirState InAirState {get; private set;}
+    public PlayerLandState LandState {get; private set;}
+    public PlayerWallSlideState WallSlideState {get; private set;}
+    public PlayerWallGrabState WallGrabState {get; private set;}
+    public PlayerWallClimbState WallClimbState {get; private set;}
     [SerializeField] PlayerData playerData;
 
     #endregion
@@ -22,6 +25,7 @@ public class Player : MonoBehaviour
     public PlayerInputHandler InputHandler {get; private set;}
     public Rigidbody2D RB {get; private set;}
     #endregion
+    
     #region Check Transform 
     [SerializeField] private Transform groundCheck;
     #endregion
@@ -35,11 +39,14 @@ public class Player : MonoBehaviour
     #region UnityCallbackFunc
     private void Awake() {
         StateMachine = new PlayerStateMachine();
-        idleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
-        moveState = new PlayerMoveState(this, StateMachine, playerData, "move");
-        jumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
-        inAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
-        landState = new PlayerLandState(this, StateMachine, playerData, "land");
+        IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
+        MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
+        JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
+        InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
+        LandState = new PlayerLandState(this, StateMachine, playerData, "land");
+        WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallSlide");
+        WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
+        WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
     }   
 
     private void Start() {
@@ -48,7 +55,7 @@ public class Player : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         FacingDirection = 1;
 
-        StateMachine.Initialize(idleState);
+        StateMachine.Initialize(IdleState);
     }
     private void Update() {
         CurrentVelocity = RB.velocity;

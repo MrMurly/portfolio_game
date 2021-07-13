@@ -22,7 +22,7 @@ public class PlayerIdleState : PlayerGroundedState
        base.LogicUpdate();
 
         if (xInput != 0) {
-           stateMachine.ChangeState(player.moveState);
+           stateMachine.ChangeState(player.MoveState);
         }
     }
     public override void PhysicsUpdate()

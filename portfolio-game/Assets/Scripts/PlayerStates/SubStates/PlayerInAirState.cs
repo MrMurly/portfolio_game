@@ -54,10 +54,10 @@ public class PlayerInAirState : PlayerState
         CheckJumpMultiplier();
 
         if(isGrounded && player.CurrentVelocity.y < 0.01f){
-            stateMachine.ChangeState(player.landState);
+            stateMachine.ChangeState(player.LandState);
         } 
-        else if (jumpInput && player.jumpState.CanJump()){
-            stateMachine.ChangeState(player.jumpState);
+        else if (jumpInput && player.JumpState.CanJump()){
+            stateMachine.ChangeState(player.JumpState);
         }
         else {
             player.CheckIfShouldFlip(xInput);
@@ -87,7 +87,7 @@ public class PlayerInAirState : PlayerState
     {
         if(coyoteTime && Time.time > startTime + playerData.coyoteTime) {
             coyoteTime = false;
-            player.jumpState.DecreaseAmountOfJumpsLeft();
+            player.JumpState.DecreaseAmountOfJumpsLeft();
         }
     }
     public void StartCoyoteTime() => coyoteTime = true;
