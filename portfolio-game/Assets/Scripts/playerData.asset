@@ -20,7 +20,17 @@ MonoBehaviour:
   wallSlideVelocity: 0
   wallJumpVelocity: 20
   wallJumpTime: 0.4
+  startOffset: {x: 0.25, y: 0.2}
+  stopOffset: {x: 0.5, y: 0.5}
   wallJumpAngle: {x: 1, y: 2}
+  dashCooldown: 0.5
+  maxHoldTime: 1
+  holdTimeScale: 0.25
+  dashTime: 0.2
+  dashVelocity: 30
+  drag: 10
+  dashEndYMultiplier: 0.2
+  distanceBetweenAfterImage: 0.5
   groundCheckRadius: 0.1
   wallCheckDistance: 0.4
   whatIsGround:

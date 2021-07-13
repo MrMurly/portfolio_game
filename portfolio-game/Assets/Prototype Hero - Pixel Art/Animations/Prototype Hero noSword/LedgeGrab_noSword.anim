@@ -78,8 +78,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0
-    functionName: AE_LedgeGrab
+  - time: 0.3125
+    functionName: AnimationTriggerFunction
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
