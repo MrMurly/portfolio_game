@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    // https://www.youtube.com/playlist?list=PLy78FINcVmjA0zDBhLuLNL1Jo6xNMMq-W
     #region StateVariables
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState {get; private set;}
@@ -15,7 +13,6 @@ public class Player : MonoBehaviour
     public PlayerLandState LandState {get; private set;}
     public PlayerWallSlideState WallSlideState {get; private set;}
     public PlayerWallGrabState WallGrabState {get; private set;}
-    public PlayerWallClimbState WallClimbState {get; private set;}
     [SerializeField] PlayerData playerData;
 
     #endregion
@@ -28,6 +25,7 @@ public class Player : MonoBehaviour
     
     #region Check Transform 
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform wallCheck;
     #endregion
 
     #region OtherVariables
@@ -44,9 +42,8 @@ public class Player : MonoBehaviour
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
-        WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallSlide");
-        WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
-        WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
+        WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallSlide");
+        WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
     }   
 
     private void Start() {
@@ -83,6 +80,9 @@ public class Player : MonoBehaviour
     #region CheckFunction
     public bool CheckIfGrounded(){
         return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
+    }
+    public bool CheckIfTouchingWall() {
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
     }
     public void CheckIfShouldFlip(int xInput) {
         if (xInput != 0 && xInput != FacingDirection){
