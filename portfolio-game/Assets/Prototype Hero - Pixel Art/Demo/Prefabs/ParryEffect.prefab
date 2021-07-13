@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 249414830282245118}
   - component: {fileID: 9058538774009246293}
   m_Layer: 0
-  m_Name: ParryEffect
+  m_Name: DustEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

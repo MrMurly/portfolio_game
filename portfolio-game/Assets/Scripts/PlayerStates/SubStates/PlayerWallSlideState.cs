@@ -8,11 +8,6 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     {
     }
 
-
-    public override void AnimationTrigger()
-    {
-        base.AnimationTrigger();
-    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
