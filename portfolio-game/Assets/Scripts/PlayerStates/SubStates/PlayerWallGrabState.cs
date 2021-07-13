@@ -21,7 +21,7 @@ public class PlayerWallGrabState : PlayerTouchingWallState
 
         HoldPosition();
 
-        //tilt camera up
+        //TODO: tilt camera up
         if (!isExitingState && (yInput < 0 || !grabInput)) {
             stateMachine.ChangeState(player.WallSlideState);
         }
