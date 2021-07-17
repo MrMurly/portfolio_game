@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVelocity: 10
   jumpVelocity: 15
-  amountOfJumps: 1
+  amountOfJumps: 2
   coyoteTime: 0.2
   variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: 0
@@ -31,6 +31,7 @@ MonoBehaviour:
   drag: 10
   dashEndYMultiplier: 0.2
   distanceBetweenAfterImage: 0.5
+  airSlamVelocity: 15
   groundCheckRadius: 0.1
   wallCheckDistance: 0.4
   whatIsGround:

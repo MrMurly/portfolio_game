@@ -79,6 +79,20 @@ public class Player : MonoBehaviour
     private void FixedUpdate() {
         StateMachine.CurrentState.PhysicsUpdate();
     }
+    
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+        string _stateText = StateMachine.CurrentState.ToString();
+    
+        GUIStyle customStyle = new GUIStyle();
+        customStyle.fontSize = 30;   // can also use e.g. <size=30> in Rich Text
+        customStyle.richText = true;
+        Vector3 textPosition = transform.position + (Vector3.up * 0.3f);
+        string richText = "<color=red><B>" + _stateText + "</B></color>";
+
+        UnityEditor.Handles.Label(textPosition, richText, customStyle);
+    }
     #endregion
 
     #region SetFunctions
