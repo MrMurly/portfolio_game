@@ -89,8 +89,16 @@ public class PlayerInAirState : PlayerState
         if (isGrounded && player.CurrentVelocity.y < 0.01f){
             stateMachine.ChangeState(player.LandState);
         } 
-        else if (attackInput && yInput < 0f) {
-            stateMachine.ChangeState(player.AirSlamState);
+        else if (attackInput) {
+            if (yInput < 0f) {
+                stateMachine.ChangeState(player.AirSlamState);
+            } 
+            else if (yInput > 0f) {
+                stateMachine.ChangeState(player.AirAttackUpState);
+            }
+            else {
+                stateMachine.ChangeState(player.AirAttackState);
+            }
         }
         else if (isTouchingWall && !isTouchingLedge) {
             stateMachine.ChangeState(player.LedgeClimbState);

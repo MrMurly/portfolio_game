@@ -16,9 +16,12 @@ public class Player : MonoBehaviour
     public PlayerWallJumpState WallJumpState {get; private set;}
     public PlayerLedgeClimbState LedgeClimbState {get; private set;}
     public PlayerDashState DashState {get; private set;}
-    public PlayerAttackState NormalAttackState {get; private set;}
+    public PlayerAttackState GroundedAttackState {get; private set;}
     public PlayerAirSlamState AirSlamState {get; private set;}
     public PlayerAirSlamLandState AirSlamLandState {get; private set;}
+    public PlayerAirAttackState AirAttackState {get; private set;}
+    public PlayerAttackState GroundedAttackUpState {get; private set;}
+    public PlayerAirAttackState AirAttackUpState {get; private set;}
     [SerializeField] PlayerData playerData;
 
     #endregion
@@ -56,10 +59,13 @@ public class Player : MonoBehaviour
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "inAir");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
         DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
-        NormalAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        GroundedAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        GroundedAttackUpState = new PlayerAttackState(this, StateMachine, playerData, "attackUp");
         AirSlamState = new PlayerAirSlamState(this, StateMachine, playerData, "airSlam");
         AirSlamLandState = new PlayerAirSlamLandState(this, StateMachine, playerData, "slamLand");
-    }   
+        AirAttackState = new PlayerAirAttackState(this, StateMachine, playerData, "airAttack");
+        AirAttackUpState = new PlayerAirAttackState(this, StateMachine, playerData, "airAttackUp");
+    }       
 
     private void Start() {
         Anim = GetComponent<Animator>();

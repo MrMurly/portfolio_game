@@ -6,6 +6,7 @@ public class PlayerGroundedState : PlayerState
 {
 
     protected int xInput;
+    private int yInput;
     protected bool JumpInput;
     private bool grabInput;
     private bool dashInput;
@@ -37,6 +38,7 @@ public class PlayerGroundedState : PlayerState
        base.LogicUpdate();
 
         xInput = player.InputHandler.NormaInputX;
+        yInput = player.InputHandler.NormaInputY;
         JumpInput = player.InputHandler.JumpInput;
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
@@ -50,7 +52,12 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.InAirState);
         } 
         else if (attackInput) {
-            stateMachine.ChangeState(player.NormalAttackState);
+            if (yInput > 0) {
+                stateMachine.ChangeState(player.GroundedAttackUpState);
+            }
+            else {
+                stateMachine.ChangeState(player.GroundedAttackState);
+            }
         }
         else if (isTouchingWall && grabInput && isTouchingLedge) {
             stateMachine.ChangeState(player.WallSlideState);

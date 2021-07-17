@@ -8,6 +8,12 @@ public class PlayerAirSlamLandState : PlayerGroundedState
 
     }
 
+    public override void Enter()
+    {
+        base.Enter();
+
+        player.setVelocityZero();
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();

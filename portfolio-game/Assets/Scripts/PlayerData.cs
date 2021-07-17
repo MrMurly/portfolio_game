@@ -39,6 +39,8 @@ public class PlayerData : ScriptableObject
     public float distanceBetweenAfterImage = 0.5f;
     [Header("AirSlamState")]
     public float airSlamVelocity = 10f;
+    [Header("AirAttack")]
+    public float airAttackBounce = 1f;
 
     [Header("CheckVariables")]
     public float groundCheckRadius = 0.3f;

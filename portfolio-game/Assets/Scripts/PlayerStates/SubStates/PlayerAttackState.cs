@@ -8,12 +8,6 @@ public class PlayerAttackState : PlayerAbilityState
     {
     }
 
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-
-        isAbilityDone = true;
-    }
     override public void Enter() {
         base.Enter();
         player.InputHandler.UseAttackInput();
@@ -21,5 +15,8 @@ public class PlayerAttackState : PlayerAbilityState
     override public void LogicUpdate() {
         base.LogicUpdate();
         player.setVelocityX(0f);
+        if (isAnimationFinished) {
+            isAbilityDone = true;
+        }
     }
 }
