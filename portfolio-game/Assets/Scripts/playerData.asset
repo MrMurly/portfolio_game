@@ -31,7 +31,11 @@ MonoBehaviour:
   drag: 10
   dashEndYMultiplier: 0.2
   distanceBetweenAfterImage: 0.5
-  airSlamVelocity: 15
+  airSlamVelocity: 10
+  airAttackBounce: 4
+  dodgeTime: 2
+  dodgeSpeed: 10
+  dodgeDeacceleration: 4
   groundCheckRadius: 0.1
   wallCheckDistance: 0.4
   whatIsGround:

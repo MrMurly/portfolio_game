@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public PlayerAirAttackState AirAttackState {get; private set;}
     public PlayerAttackState GroundedAttackUpState {get; private set;}
     public PlayerAirAttackState AirAttackUpState {get; private set;}
+    public PlayerDodgeState DodgeState {get; private set;}
     [SerializeField] PlayerData playerData;
 
     #endregion
@@ -65,6 +66,7 @@ public class Player : MonoBehaviour
         AirSlamLandState = new PlayerAirSlamLandState(this, StateMachine, playerData, "slamLand");
         AirAttackState = new PlayerAirAttackState(this, StateMachine, playerData, "airAttack");
         AirAttackUpState = new PlayerAirAttackState(this, StateMachine, playerData, "airAttackUp");
+        DodgeState = new PlayerDodgeState(this, StateMachine, playerData, "dodge");
     }       
 
     private void Start() {

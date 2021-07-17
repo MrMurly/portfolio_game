@@ -11,7 +11,7 @@ public class PlayerInputHandler : MonoBehaviour
     public Vector2 RawMovementInput {get; private set;}
     public Vector2 RawDashDirectionInput {get; private set;}
     public Vector2Int DashDirectionInput {get; private set;}
- 
+
     public int NormaInputX {get; private set;}
     public int NormaInputY {get; private set;}
     public bool JumpInput {get; private set;}
@@ -21,6 +21,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool DashInputStop {get; private set;}
     public bool AttackInput {get; private set;}
     private float dashInputStartTime;
+    public bool DodgeInput {get; private set;}
+    public float dodgeInputStartTime {get; private set;}
     [SerializeField] private float inputHoldTime = 0.2f;
     private float jumpInputStartTime;
 
@@ -30,8 +32,8 @@ public class PlayerInputHandler : MonoBehaviour
     }
 
     private void Update() {
-        CheckJumpInputHoldTime();
         CheckDashInputHoldTime();
+        CheckJumpInputHoldTime();
     }
 
     public void OnMoveInput(InputAction.CallbackContext context){
@@ -92,12 +94,20 @@ public class PlayerInputHandler : MonoBehaviour
 
         DashDirectionInput = Vector2Int.RoundToInt(RawDashDirectionInput.normalized);
     }
+
+    public void OnDodgeDirectionInput(InputAction.CallbackContext context) {
+        if (context.performed){
+            DodgeInput = true;
+        } 
+
+    }
     public void UseJumpInput() => JumpInput = false;
     public void UseDashInput() => DashInput = false;
     public void UseAttackInput() => AttackInput = false;
-    
+    public void UseDodgeInput() => DodgeInput = false;
+
     private void CheckJumpInputHoldTime(){
-        if (Time.time >= jumpInputStartTime + inputHoldTime){
+        if(Time.time >= jumpInputStartTime + inputHoldTime ){
             JumpInput = false;
         }
     }

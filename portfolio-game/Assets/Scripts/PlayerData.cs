@@ -41,6 +41,10 @@ public class PlayerData : ScriptableObject
     public float airSlamVelocity = 10f;
     [Header("AirAttack")]
     public float airAttackBounce = 1f;
+    [Header("DodgeState")]
+    public float dodgeTime = 2f;
+    public float dodgeSpeed = 20f;
+    public float dodgeDeacceleration = 14f;
 
     [Header("CheckVariables")]
     public float groundCheckRadius = 0.3f;
