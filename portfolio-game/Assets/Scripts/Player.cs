@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     public PlayerWallJumpState WallJumpState {get; private set;}
     public PlayerLedgeClimbState LedgeClimbState {get; private set;}
     public PlayerDashState DashState {get; private set;}
+    public PlayerAttackState NormalAttackState {get; private set;}
+    public PlayerAirSlamState AirSlamState {get; private set;}
+    public PlayerAirSlamLandState AirSlamLandState {get; private set;}
     [SerializeField] PlayerData playerData;
 
     #endregion
@@ -34,8 +37,9 @@ public class Player : MonoBehaviour
     #endregion
 
     #region OtherVariables
-    public Vector2 CurrentVelocity {get; private set;}
+    private SpriteRenderer sprite;
     public int FacingDirection {get; private set;}
+    public Vector2 CurrentVelocity {get; private set;}
     private Vector2 workspace;
     #endregion
 
@@ -52,12 +56,16 @@ public class Player : MonoBehaviour
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "inAir");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
         DashState = new PlayerDashState(this, StateMachine, playerData, "inAir");
+        NormalAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        AirSlamState = new PlayerAirSlamState(this, StateMachine, playerData, "airSlam");
+        AirSlamLandState = new PlayerAirSlamLandState(this, StateMachine, playerData, "slamLand");
     }   
 
     private void Start() {
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         FacingDirection = 1;
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
 
@@ -138,7 +146,7 @@ public class Player : MonoBehaviour
     private void AnimationFinishedTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     private void Flip() {
         FacingDirection *= -1;
-        transform.Rotate(0f, 180f, 0f);
+        sprite.flipX = !sprite.flipX;
     }
     
     #endregion

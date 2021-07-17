@@ -37,6 +37,8 @@ public class PlayerData : ScriptableObject
     public float drag = 10f;
     public float dashEndYMultiplier = 0.2f;
     public float distanceBetweenAfterImage = 0.5f;
+    [Header("AirSlamState")]
+    public float airSlamVelocity = 10f;
 
     [Header("CheckVariables")]
     public float groundCheckRadius = 0.3f;

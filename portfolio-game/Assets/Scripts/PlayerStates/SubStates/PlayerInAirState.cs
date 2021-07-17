@@ -8,10 +8,12 @@ public class PlayerInAirState : PlayerState
 
     // Input
     private int xInput;
+    private int yInput;
     private bool jumpInput;
     private bool jumpInputStop;
     private bool grabInput;
     private bool dashInput;
+    private bool attackInput;
 
     // Check    
     private bool isGrounded;    
@@ -73,17 +75,23 @@ public class PlayerInAirState : PlayerState
         CheckCoyoteTime();
         CheckWallJumpCoyoteTime();
 
+
         xInput = player.InputHandler.NormaInputX;
+        yInput = player.InputHandler.NormaInputY;
         jumpInput = player.InputHandler.JumpInput;
         jumpInputStop = player.InputHandler.JumpInputStop;
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
+        attackInput = player.InputHandler.AttackInput;
 
         CheckJumpMultiplier();
 
         if (isGrounded && player.CurrentVelocity.y < 0.01f){
             stateMachine.ChangeState(player.LandState);
         } 
+        else if (attackInput && yInput < 0f) {
+            stateMachine.ChangeState(player.AirSlamState);
+        }
         else if (isTouchingWall && !isTouchingLedge) {
             stateMachine.ChangeState(player.LedgeClimbState);
         }
