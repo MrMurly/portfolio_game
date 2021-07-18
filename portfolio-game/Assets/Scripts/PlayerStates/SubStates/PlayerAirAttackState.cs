@@ -11,8 +11,10 @@ public class PlayerAirAttackState : PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
-        player.InputHandler.UseAttackInput();
 
+        player.sfxPlayer.PlayOneShot(playerData.attackClip, 0.7f);
+        
+        player.InputHandler.UseAttackInput();
         player.setVelocityY(playerData.airAttackBounce);
     }
 

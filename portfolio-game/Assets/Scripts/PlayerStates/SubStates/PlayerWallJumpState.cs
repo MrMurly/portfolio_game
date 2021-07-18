@@ -12,6 +12,8 @@ public class PlayerWallJumpState : PlayerAbilityState
     {
         base.Enter();
 
+        player.sfxPlayer.PlayOneShot(playerData.jumpClip);
+
         player.InputHandler.UseJumpInput();
         player.JumpState.ResetAmountOfJumpsLeft();
         player.setVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);

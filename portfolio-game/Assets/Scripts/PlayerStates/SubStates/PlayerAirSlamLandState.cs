@@ -12,6 +12,7 @@ public class PlayerAirSlamLandState : PlayerGroundedState
     {
         base.Enter();
 
+        player.sfxPlayer.PlayOneShot(playerData.airSlamClip, 0.5f);
         player.setVelocityZero();
     }
     public override void LogicUpdate()

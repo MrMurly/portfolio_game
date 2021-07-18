@@ -15,6 +15,7 @@ public class PlayerJumpState : PlayerAbilityState
 
         player.InputHandler.UseJumpInput();
 
+        player.sfxPlayer.PlayOneShot(playerData.jumpClip);
         player.setVelocityY(playerData.jumpVelocity);
         isAbilityDone = true;
         amountOfJumpsLeft--;

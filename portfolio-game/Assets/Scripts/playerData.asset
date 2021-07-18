@@ -33,7 +33,7 @@ MonoBehaviour:
   distanceBetweenAfterImage: 0.5
   airSlamVelocity: 10
   airAttackBounce: 4
-  dodgeTime: 2
+  dodgeTime: 0.7
   dodgeSpeed: 10
   dodgeDeacceleration: 4
   groundCheckRadius: 0.1

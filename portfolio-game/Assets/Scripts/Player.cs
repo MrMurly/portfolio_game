@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     public PlayerInputHandler InputHandler {get; private set;}
     public Rigidbody2D RB {get; private set;}
     public Transform DashDirectionIndicator {get; private set;}
+    public AudioSource sfxPlayer {get; private set;}
     #endregion
     
     #region Check Transform 
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
         InputHandler = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        sfxPlayer = GetComponent<AudioSource>();
         FacingDirection = 1;
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
 

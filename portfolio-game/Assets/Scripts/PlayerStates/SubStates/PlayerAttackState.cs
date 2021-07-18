@@ -10,6 +10,8 @@ public class PlayerAttackState : PlayerAbilityState
 
     override public void Enter() {
         base.Enter();
+
+        player.sfxPlayer.PlayOneShot(playerData.attackClip, 0.7f);
         player.InputHandler.UseAttackInput();
     }
     override public void LogicUpdate() {

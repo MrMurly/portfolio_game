@@ -6,17 +6,23 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     [Header("Move State")]
+    public AudioClip[] footstepClips;
     public float movementVelocity = 10f;
     
     [Header("Jump State")]
+    public AudioClip jumpClip;
     public float jumpVelocity = 15f;
     public int amountOfJumps = 1;
-    
+
+    [Header("landState")]
+    public AudioClip landingClip;
+
     [Header("inAirState")]
     public float coyoteTime = 0.2f;
     public float variableJumpHeightMultiplier = 0.5f;
     
     [Header("Wall slide state")]
+    public AudioClip wallSlideClip;
     public float wallSlideVelocity = 3f;
     
     [Header("WallJumpState")]
@@ -37,11 +43,13 @@ public class PlayerData : ScriptableObject
     public float drag = 10f;
     public float dashEndYMultiplier = 0.2f;
     public float distanceBetweenAfterImage = 0.5f;
-    [Header("AirSlamState")]
+    [Header("Attack")]
+    public AudioClip airSlamClip;
+    public AudioClip attackClip;
     public float airSlamVelocity = 10f;
-    [Header("AirAttack")]
     public float airAttackBounce = 1f;
     [Header("DodgeState")]
+    public AudioClip dodgeClip;
     public float dodgeTime = 2f;
     public float dodgeSpeed = 20f;
     public float dodgeDeacceleration = 14f;
