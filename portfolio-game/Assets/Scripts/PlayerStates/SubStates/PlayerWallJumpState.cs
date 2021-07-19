@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWallJumpState : PlayerAbilityState
 {
-    private int wallJumpDirection;
+    private int _wallJumpDirection;
+    private static readonly int YVelocity = Animator.StringToHash("yVelocity");
+
     public PlayerWallJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -12,31 +12,31 @@ public class PlayerWallJumpState : PlayerAbilityState
     {
         base.Enter();
 
-        player.sfxPlayer.PlayOneShot(playerData.jumpClip);
+        Player.SfxPlayer.PlayOneShot(PlayerData.jumpClip);
 
-        player.InputHandler.UseJumpInput();
-        player.JumpState.ResetAmountOfJumpsLeft();
-        player.setVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
-        player.CheckIfShouldFlip(wallJumpDirection);
-        player.JumpState.DecreaseAmountOfJumpsLeft();
+        Player.InputHandler.UseJumpInput();
+        Player.JumpState.ResetAmountOfJumpsLeft();
+        Player.SetVelocity(PlayerData.wallJumpVelocity, PlayerData.wallJumpAngle, _wallJumpDirection);
+        Player.CheckIfShouldFlip(_wallJumpDirection);
+        Player.JumpState.DecreaseAmountOfJumpsLeft();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        player.Anim.SetFloat("yVelocity", player.CurrentVelocity.y);
+        Player.Anim.SetFloat(YVelocity, Player.CurrentVelocity.y);
 
-        if (Time.time >= startTime + playerData.wallJumpTime) {
-            isAbilityDone = true;
+        if (Time.time >= StartTime + PlayerData.wallJumpTime) {
+            IsAbilityDone = true;
         }
     }
     public void DetermineWallJumpDirection(bool isTouchingWall) {
         if (isTouchingWall) {
-            wallJumpDirection = -player.FacingDirection;
+            _wallJumpDirection = -Player.FacingDirection;
         }
         else {
-            wallJumpDirection = player.FacingDirection;
+            _wallJumpDirection = Player.FacingDirection;
         }
     }
 }

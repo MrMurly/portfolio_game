@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerDodgeState : PlayerAbilityState
@@ -10,18 +8,18 @@ public class PlayerDodgeState : PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
-        player.sfxPlayer.PlayOneShot(playerData.dodgeClip);
+        Player.SfxPlayer.PlayOneShot(PlayerData.dodgeClip);
     }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
     
-        player.setVelocityX(playerData.dodgeSpeed * player.FacingDirection);
+        Player.SetVelocityX(PlayerData.dodgeSpeed * Player.FacingDirection);
 
-        if (startTime + playerData.dodgeTime <= Time.time) {
-            isAbilityDone = true;
-            player.InputHandler.UseDodgeInput();
-            player.setVelocityX(0f);
+        if (StartTime + PlayerData.dodgeTime <= Time.time) {
+            IsAbilityDone = true;
+            Player.InputHandler.UseDodgeInput();
+            Player.SetVelocityX(0f);
         }
     }
 

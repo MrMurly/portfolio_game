@@ -1,24 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerAttackState : PlayerAbilityState
 {
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
-
-    override public void Enter() {
+    public override void Enter() {
         base.Enter();
 
-        player.sfxPlayer.PlayOneShot(playerData.attackClip, 0.7f);
-        player.InputHandler.UseAttackInput();
+        Player.SfxPlayer.PlayOneShot(PlayerData.attackClip, 0.7f);
+        Player.InputHandler.UseAttackInput();
     }
-    override public void LogicUpdate() {
+    public override void LogicUpdate() {
         base.LogicUpdate();
-        player.setVelocityX(0f);
-        if (isAnimationFinished) {
-            isAbilityDone = true;
+        Player.SetVelocityX(0f);
+        if (IsAnimationFinished) {
+            IsAbilityDone = true;
         }
     }
 }

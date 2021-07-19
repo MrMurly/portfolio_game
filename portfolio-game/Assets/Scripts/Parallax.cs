@@ -5,26 +5,27 @@ using UnityEngine;
 public class Parallax : MonoBehaviour
 {
 
-    private float length, startPos;
-    private Camera cam;
+    private float _length, _startPos;
+    private Camera _cam;
     public float parallaxEffect;
-    // Start is called before the first frame update
-    void Start()
+    
+    private void Start()
     {
-        startPos = transform.position.x;
-        length = GetComponent<SpriteRenderer>().bounds.size.x;
-        cam = Camera.main;
+        _startPos = transform.position.x;
+        _length = GetComponent<SpriteRenderer>().bounds.size.x;
+        _cam = Camera.main;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float temp = cam.transform.position.x * (1 - parallaxEffect);
-        float dist = (cam.transform.position.x * parallaxEffect);
+        var cameraPosition = _cam.transform.position;
+        var temp = cameraPosition.x * (1 - parallaxEffect);
+        var dist = (cameraPosition.x * parallaxEffect);
 
-        transform.position = new Vector3(startPos + dist, transform.position.y, transform.position.z);
+        var parallaxPosition = transform.position;
+        parallaxPosition = new Vector3(_startPos + dist, parallaxPosition.y, parallaxPosition.z);
+        transform.position = parallaxPosition;
 
-        if(temp > startPos + length) startPos += length;
-        else if(temp < startPos - length) startPos -= length;
+        if(temp > _startPos + _length) _startPos += _length;
+        else if(temp < _startPos - _length) _startPos -= _length;
     }
 }

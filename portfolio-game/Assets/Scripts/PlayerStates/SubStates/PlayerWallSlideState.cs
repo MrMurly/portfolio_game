@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerWallSlideState : PlayerTouchingWallState
 {
     public PlayerWallSlideState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -11,13 +7,13 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        
-        if (!isExitingState){
-            player.setVelocityY(-playerData.wallSlideVelocity);
 
-            if (grabInput) {
-                stateMachine.ChangeState(player.WallGrabState);
-            }
+        if (IsExitingState) return;
+        
+        Player.SetVelocityY(-PlayerData.wallSlideVelocity);
+
+        if (GrabInput) {
+            StateMachine.ChangeState(Player.WallGrabState);
         }
     }
 }

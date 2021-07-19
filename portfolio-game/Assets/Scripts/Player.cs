@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     #region StateVariables
+    //TODO: Move this into a dictionary
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState {get; private set;}
     public PlayerMoveState MoveState {get; private set;}
@@ -30,9 +29,9 @@ public class Player : MonoBehaviour
     #region Components
     public Animator Anim {get; private set;}
     public PlayerInputHandler InputHandler {get; private set;}
-    public Rigidbody2D RB {get; private set;}
+    public Rigidbody2D Rb {get; private set;}
     public Transform DashDirectionIndicator {get; private set;}
-    public AudioSource sfxPlayer {get; private set;}
+    public AudioSource SfxPlayer {get; private set;}
     #endregion
     
     #region Check Transform 
@@ -42,10 +41,11 @@ public class Player : MonoBehaviour
     #endregion
 
     #region OtherVariables
-    private SpriteRenderer sprite;
+    private SpriteRenderer _sprite;
+    private Vector2 _workspace;
     public int FacingDirection {get; private set;}
     public Vector2 CurrentVelocity {get; private set;}
-    private Vector2 workspace;
+
     #endregion
 
     #region UnityCallbackFunc
@@ -73,16 +73,16 @@ public class Player : MonoBehaviour
     private void Start() {
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
-        RB = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        sfxPlayer = GetComponent<AudioSource>();
+        Rb = GetComponent<Rigidbody2D>();
+        _sprite = GetComponent<SpriteRenderer>();
+        SfxPlayer = GetComponent<AudioSource>();
         FacingDirection = 1;
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
 
         StateMachine.Initialize(IdleState);
     }
     private void Update() {
-        CurrentVelocity = RB.velocity;
+        CurrentVelocity = Rb.velocity;
         StateMachine.CurrentState.LogicUpdate();
     }
 
@@ -93,43 +93,41 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
-        string _stateText = StateMachine.CurrentState.ToString();
-    
-        GUIStyle customStyle = new GUIStyle();
-        customStyle.fontSize = 30;   // can also use e.g. <size=30> in Rich Text
-        customStyle.richText = true;
-        Vector3 textPosition = transform.position + (Vector3.up * 0.3f);
-        string richText = "<color=red><B>" + _stateText + "</B></color>";
+        var stateText = StateMachine.CurrentState.ToString();
+
+        var customStyle = new GUIStyle {fontSize = 30, richText = true};
+        var textPosition = transform.position + (Vector3.up * 0.3f);
+        var richText = $"<color=red><B>{stateText}</B></color>";
 
         UnityEditor.Handles.Label(textPosition, richText, customStyle);
     }
     #endregion
 
     #region SetFunctions
-    public void setVelocityZero() {
-        RB.velocity = Vector2.zero;
+    public void SetVelocityZero() {
+        Rb.velocity = Vector2.zero;
         CurrentVelocity = Vector2.zero;
     }
-    public void setVelocity(float velocity, Vector2 angle, int direction) {
+    public void SetVelocity(float velocity, Vector2 angle, int direction) {
         angle.Normalize();
-        workspace.Set(angle.x * velocity * direction, angle.y * velocity);
-        RB.velocity = workspace;
-        CurrentVelocity = workspace;
+        _workspace.Set(angle.x * velocity * direction, angle.y * velocity);
+        Rb.velocity = _workspace;
+        CurrentVelocity = _workspace;
     }
-    public void setVelocity(float velocity, Vector2 direction) {
-        workspace = direction * velocity;
-        RB.velocity = workspace;
-        CurrentVelocity = workspace;
+    public void SetVelocity(float velocity, Vector2 direction) {
+        _workspace = direction * velocity;
+        Rb.velocity = _workspace;
+        CurrentVelocity = _workspace;
     }
-    public void setVelocityX(float velocity) {
-        workspace.Set(velocity, CurrentVelocity.y);
-        RB.velocity = workspace;
-        CurrentVelocity = workspace;
+    public void SetVelocityX(float velocity) {
+        _workspace.Set(velocity, CurrentVelocity.y);
+        Rb.velocity = _workspace;
+        CurrentVelocity = _workspace;
     }
-    public void setVelocityY(float velocity) {
-        workspace.Set(CurrentVelocity.x, velocity);
-        RB.velocity = workspace;
-        CurrentVelocity = workspace;
+    public void SetVelocityY(float velocity) {
+        _workspace.Set(CurrentVelocity.x, velocity);
+        Rb.velocity = _workspace;
+        CurrentVelocity = _workspace;
     }
     #endregion
 
@@ -143,7 +141,7 @@ public class Player : MonoBehaviour
     public bool CheckIfTouchingLedge() {
         return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
     }
-    public bool CheckIfTouchingWallback() {
+    public bool CheckIfTouchingWallBack() {
         return Physics2D.Raycast(wallCheck.position, Vector2.right * -FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
     }
     public void CheckIfShouldFlip(int xInput) {
@@ -156,21 +154,25 @@ public class Player : MonoBehaviour
 
     #region otherFunctions
     public Vector2 DetermineCornerPosition() {
-        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
-        float xDistance = xHit.distance;
-        workspace.Set(xDistance * FacingDirection, 0f);
-        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)(workspace), Vector2.down, ledgeCheck.position.y - wallCheck.position.y, playerData.whatIsGround);
-        float yDistance = yHit.distance;
+        var wallCheckPosition = wallCheck.position;
+        var ledgeCheckPosition = ledgeCheck.position;
+        
+        var xHit = Physics2D.Raycast(wallCheckPosition, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
+        var xDistance = xHit.distance;
+        _workspace.Set(xDistance * FacingDirection, 0f);
 
-        workspace.Set(wallCheck.position.x + (xDistance * FacingDirection), ledgeCheck.position.y + (yDistance * FacingDirection));
-        return workspace;
+        var yHit = Physics2D.Raycast(ledgeCheckPosition + (Vector3)(_workspace), Vector2.down, ledgeCheckPosition.y - wallCheckPosition.y, playerData.whatIsGround);
+        var yDistance = yHit.distance;
+        
+        _workspace.Set(wallCheckPosition.x + (xDistance * FacingDirection), ledgeCheckPosition.y + (yDistance * FacingDirection));
+        return _workspace;
     }
     private void AnimationTriggerFunction() => StateMachine.CurrentState.AnimationTrigger();
 
     private void AnimationFinishedTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     private void Flip() {
         FacingDirection *= -1;
-        sprite.flipX = !sprite.flipX;
+        _sprite.flipX = !_sprite.flipX;
     }
     
     #endregion

@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAirSlamState : PlayerAbilityState
 {
+    private static readonly int YVelocity = Animator.StringToHash("yVelocity");
 
     public PlayerAirSlamState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -13,17 +12,17 @@ public class PlayerAirSlamState : PlayerAbilityState
     {
         base.Enter();
 
-        player.InputHandler.UseAttackInput();
-        player.setVelocityY(-playerData.airSlamVelocity);
+        Player.InputHandler.UseAttackInput();
+        Player.SetVelocityY(-PlayerData.airSlamVelocity);
     } 
 
 
     public override void LogicUpdate() {
         base.LogicUpdate();
-        player.Anim.SetFloat("yVelocity", player.CurrentVelocity.y);
+        Player.Anim.SetFloat(YVelocity, Player.CurrentVelocity.y);
 
-        if (isGrounded) {
-            player.StateMachine.ChangeState(player.AirSlamLandState);
+        if (IsGrounded) {
+            Player.StateMachine.ChangeState(Player.AirSlamLandState);
         }        
     }
 }

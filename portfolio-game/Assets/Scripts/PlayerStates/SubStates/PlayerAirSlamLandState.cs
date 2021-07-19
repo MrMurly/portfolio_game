@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerAirSlamLandState : PlayerGroundedState
 {
     public PlayerAirSlamLandState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName) {
@@ -12,14 +8,14 @@ public class PlayerAirSlamLandState : PlayerGroundedState
     {
         base.Enter();
 
-        player.sfxPlayer.PlayOneShot(playerData.airSlamClip, 0.5f);
-        player.setVelocityZero();
+        Player.SfxPlayer.PlayOneShot(PlayerData.airSlamClip, 0.5f);
+        Player.SetVelocityZero();
     }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (!isExitingState && isAnimationFinished) {
-            stateMachine.ChangeState(player.IdleState);
+        if (!IsExitingState && IsAnimationFinished) {
+            StateMachine.ChangeState(Player.IdleState);
         }
     }
 }

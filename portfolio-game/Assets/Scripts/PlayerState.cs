@@ -1,36 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerState
 {
-    protected Player player;
-    protected PlayerStateMachine stateMachine;
-    protected PlayerData playerData;
-    protected bool isAnimationFinished;
-    protected bool isExitingState;
-    protected float startTime;
-    private string animBoolName;
+    private readonly string _animBoolName;
+    
+    protected readonly Player Player;
+    protected readonly PlayerStateMachine StateMachine;
+    protected readonly PlayerData PlayerData;
+    protected bool IsAnimationFinished;
+    protected bool IsExitingState;
+    protected float StartTime;
 
-    public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName ) {
-        this.player = player;
-        this.stateMachine = stateMachine;
-        this.playerData = playerData;
-        this.animBoolName = animBoolName;
+    protected PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName ) {
+        this.Player = player;
+        this.StateMachine = stateMachine;
+        this.PlayerData = playerData;
+        this._animBoolName = animBoolName;
     }
 
     public virtual void Enter()
     {
-        player.Anim.SetBool(animBoolName, true);
+        Player.Anim.SetBool(_animBoolName, true);
         DoChecks();
-        startTime = Time.time;
-        isAnimationFinished = false;
-        isExitingState = false;
+        StartTime = Time.time;
+        IsAnimationFinished = false;
+        IsExitingState = false;
     }
 
     public virtual void Exit() {
-        isExitingState = true;
-        player.Anim.SetBool(animBoolName, false);
+        IsExitingState = true;
+        Player.Anim.SetBool(_animBoolName, false);
     }
     public virtual void LogicUpdate() {
 
@@ -38,7 +37,8 @@ public class PlayerState
     public virtual void PhysicsUpdate(){
         DoChecks();
     }
-    public virtual void DoChecks(){
+
+    protected virtual void DoChecks(){
 
     }
 
@@ -46,5 +46,5 @@ public class PlayerState
 
     }
 
-    public virtual void AnimationFinishTrigger() => isAnimationFinished = true;
+    public virtual void AnimationFinishTrigger() => IsAnimationFinished = true;
 }

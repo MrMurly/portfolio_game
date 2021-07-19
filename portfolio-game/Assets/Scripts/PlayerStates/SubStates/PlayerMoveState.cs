@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundedState
@@ -10,18 +8,18 @@ public class PlayerMoveState : PlayerGroundedState
     
 
     public override void AnimationTrigger() {
-        AudioClip clipToPlay = playerData.footstepClips[Random.Range(0, playerData.footstepClips.Length)];
-        player.sfxPlayer.PlayOneShot(clipToPlay);
+        var footstepAudioClip = PlayerData.footstepClips[Random.Range(0, PlayerData.footstepClips.Length)];
+        Player.SfxPlayer.PlayOneShot(footstepAudioClip);
     }
     public override void LogicUpdate(){
         base.LogicUpdate();
 
-        player.CheckIfShouldFlip(xInput);
+        Player.CheckIfShouldFlip(XInput);
         
-        player.setVelocityX(playerData.movementVelocity * xInput);
+        Player.SetVelocityX(PlayerData.movementVelocity * XInput);
 
-        if (xInput == 0 && !isExitingState) {
-            stateMachine.ChangeState(player.IdleState);
+        if (XInput == 0 && !IsExitingState) {
+            StateMachine.ChangeState(Player.IdleState);
         }
     }
     

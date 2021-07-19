@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class PlayerWallGrabState : PlayerTouchingWallState
 {
-    private Vector2 holdPosition;
+    private Vector2 _holdPosition;
     public PlayerWallGrabState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
     public override void Enter()
     {
-        base.Enter();
-        holdPosition = player.transform.position;
+        _holdPosition = Player.transform.position;
         HoldPosition();
     }
     public override void LogicUpdate()
@@ -22,14 +21,14 @@ public class PlayerWallGrabState : PlayerTouchingWallState
         HoldPosition();
 
         //TODO: tilt camera up
-        if (!isExitingState && (yInput < 0 || !grabInput)) {
-            stateMachine.ChangeState(player.WallSlideState);
+        if (!IsExitingState && (YInput < 0 || !GrabInput)) {
+            StateMachine.ChangeState(Player.WallSlideState);
         }
     }
 
     private void HoldPosition() {
-        player.transform.position = holdPosition;
-        player.setVelocityX(0f);
-        player.setVelocityY(0f);
+        Player.transform.position = _holdPosition;
+        Player.SetVelocityX(0f);
+        Player.SetVelocityY(0f);
     }
 }

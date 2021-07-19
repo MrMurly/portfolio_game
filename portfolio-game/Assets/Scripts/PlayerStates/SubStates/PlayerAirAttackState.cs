@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerAirAttackState : PlayerAbilityState
 {
     public PlayerAirAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -12,18 +8,18 @@ public class PlayerAirAttackState : PlayerAbilityState
     {
         base.Enter();
 
-        player.sfxPlayer.PlayOneShot(playerData.attackClip, 0.7f);
+        Player.SfxPlayer.PlayOneShot(PlayerData.attackClip, 0.7f);
         
-        player.InputHandler.UseAttackInput();
-        player.setVelocityY(playerData.airAttackBounce);
+        Player.InputHandler.UseAttackInput();
+        Player.SetVelocityY(PlayerData.airAttackBounce);
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if (isAnimationFinished) {
-            isAbilityDone = true;
+        if (IsAnimationFinished) {
+            IsAbilityDone = true;
         }
     }
 }
