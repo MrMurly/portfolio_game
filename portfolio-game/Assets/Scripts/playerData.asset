@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa8243c21e90194a98d0993a6ef9ad2, type: 3}
   m_Name: playerData
   m_EditorClassIdentifier: 
+  maxHealth: 10
+  hurtClip: {fileID: 8300000, guid: 4acaf282c31675042873963419dc479d, type: 3}
+  deathClip: {fileID: 8300000, guid: 628c4205ac542644b9286a339010668f, type: 3}
   footstepClips:
   - {fileID: 8300000, guid: 1a631ada4ecd9cf49a88b135aa70c396, type: 3}
   - {fileID: 8300000, guid: ee00faf8b8432ff40a6e008c84d5ae59, type: 3}

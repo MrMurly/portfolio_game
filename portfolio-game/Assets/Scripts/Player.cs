@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamage
 {
     #region StateVariables
     //TODO: Move this into a dictionary
@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     public PlayerAttackState GroundedAttackUpState {get; private set;}
     public PlayerAirAttackState AirAttackUpState {get; private set;}
     public PlayerDodgeState DodgeState {get; private set;}
+    public PlayerDeathState DeathState { get; private set; }
+    public PlayerHurtState HurtState { get; private set; }
     [SerializeField] PlayerData playerData;
 
     #endregion
@@ -32,6 +34,8 @@ public class Player : MonoBehaviour
     public Rigidbody2D Rb {get; private set;}
     public Transform DashDirectionIndicator {get; private set;}
     public AudioSource SfxPlayer {get; private set;}
+    private SpriteRenderer _sprite;
+
     #endregion
     
     #region Check Transform 
@@ -41,11 +45,12 @@ public class Player : MonoBehaviour
     #endregion
 
     #region OtherVariables
-    private SpriteRenderer _sprite;
+    public Vector2 CurrentVelocity {get; private set;}
     private Vector2 _workspace;
     public int FacingDirection {get; private set;}
-    public Vector2 CurrentVelocity {get; private set;}
 
+    private float _health;
+    
     #endregion
 
     #region UnityCallbackFunc
@@ -67,6 +72,8 @@ public class Player : MonoBehaviour
         AirSlamLandState = new PlayerAirSlamLandState(this, StateMachine, playerData, "slamLand");
         AirAttackState = new PlayerAirAttackState(this, StateMachine, playerData, "airAttack");
         AirAttackUpState = new PlayerAirAttackState(this, StateMachine, playerData, "airAttackUp");
+        DeathState = new PlayerDeathState(this, StateMachine, playerData, "dead");
+        HurtState = new PlayerHurtState(this, StateMachine, playerData, "hurt");
         DodgeState = new PlayerDodgeState(this, StateMachine, playerData, "dodge");
     }       
 
@@ -78,7 +85,7 @@ public class Player : MonoBehaviour
         SfxPlayer = GetComponent<AudioSource>();
         FacingDirection = 1;
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
-
+        _health = playerData.maxHealth;
         StateMachine.Initialize(IdleState);
     }
     private void Update() {
@@ -175,6 +182,27 @@ public class Player : MonoBehaviour
         _sprite.flipX = !_sprite.flipX;
     }
     
+    #endregion
+    
+    #region damageRegion
+    public void TakeDamage(float damage, float knockback)
+    {
+        _health -= damage;
+        SetVelocityX(knockback);
+        if (_health <= 0)
+        {
+            StateMachine.ChangeState(DeathState);
+        }
+        else
+        {
+            StateMachine.ChangeState(HurtState);
+        }
+    }
+
+    public void Heal(float healAmount)
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
 }
 
