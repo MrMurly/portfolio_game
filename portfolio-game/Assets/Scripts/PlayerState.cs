@@ -12,10 +12,10 @@ public class PlayerState
     protected float StartTime;
 
     protected PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName ) {
-        this.Player = player;
-        this.StateMachine = stateMachine;
-        this.PlayerData = playerData;
-        this._animBoolName = animBoolName;
+        Player = player;
+        StateMachine = stateMachine;
+        PlayerData = playerData;
+        _animBoolName = animBoolName;
     }
 
     public virtual void Enter()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -88,7 +86,7 @@ public class PlayerInputHandler : MonoBehaviour
         RawDashDirectionInput = context.ReadValue<Vector2>();
 
         if (_playerInput.currentControlScheme == "Keyboard") {
-            RawDashDirectionInput = _cam.ScreenToWorldPoint((Vector3) RawDashDirectionInput) - transform.position;
+            RawDashDirectionInput = _cam.ScreenToWorldPoint(RawDashDirectionInput) - transform.position;
         }
 
         DashDirectionInput = Vector2Int.RoundToInt(RawDashDirectionInput.normalized);

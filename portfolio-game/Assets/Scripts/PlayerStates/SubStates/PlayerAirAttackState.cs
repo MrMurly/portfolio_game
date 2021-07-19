@@ -1,5 +1,6 @@
 public class PlayerAirAttackState : PlayerAbilityState
 {
+
     public PlayerAirAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -8,18 +9,14 @@ public class PlayerAirAttackState : PlayerAbilityState
     {
         base.Enter();
 
-        Player.SfxPlayer.PlayOneShot(PlayerData.attackClip, 0.7f);
-        
-        Player.InputHandler.UseAttackInput();
         Player.SetVelocityY(PlayerData.airAttackBounce);
+        Player.SfxPlayer.PlayOneShot(PlayerData.attackClip, 0.7f);
+
     }
-
-    public override void LogicUpdate()
+    
+    public override void AnimationFinishTrigger()
     {
-        base.LogicUpdate();
-
-        if (IsAnimationFinished) {
-            IsAbilityDone = true;
-        }
+        base.AnimationFinishTrigger();
+        IsAbilityDone = true;
     }
 }
