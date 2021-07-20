@@ -170,7 +170,10 @@ public class Player : MonoBehaviour, IDamage
     {
         var attackHit = Physics2D.BoxCast(attackBox.position, _attackBoxCollider.size, 0f, Vector2.zero,
             Mathf.Infinity, playerData.whatIsEnemy);
-        attackHit.transform.GetComponent<IDamage>()?.TakeDamage(damage, knockback);
+        if (attackHit)
+        {
+            attackHit.transform.GetComponent<IDamage>()?.TakeDamage(damage, knockback);
+        }
     }
 
     #endregion
@@ -200,7 +203,7 @@ public class Player : MonoBehaviour, IDamage
     
     #endregion
     
-    #region damageRegion
+    #region damage
     public void TakeDamage(float damage, float knockback)
     {
         _health -= damage;
